@@ -1,18 +1,25 @@
 import { useState, useEffect } from "react";
-import useFetch from "../../../hooks/useFetch";
+import image1 from "./../../../img/slide1.jpg";
+import image2 from "./../../../img/slide2.jpg";
+import image3 from "./../../../img/slide3.jpg";
+import image4 from "./../../../img/slide4.jpg";
+import image5 from "./../../../img/slide5.jpg";
+import image6 from "./../../../img/slide6.jpg";
 
 const BannerCarousel = () => {
-  const [slides, setSlides] = useState([]);
+  const [slides, setSlides] = useState([
+    { id: 1, imageUrl: image1, name: "Great Montenegro" },
+    { id: 2, imageUrl: image2, name: "Iceland" },
+    { id: 3, imageUrl: image3, name: "Greenland" },
+    { id: 4, imageUrl: image4, name: "Spain" },
+    { id: 5, imageUrl: image5, name: "China" },
+    { id: 6, imageUrl: image6, name: "Tadj Mahal" },
+  ]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const { data, loading, error } = useFetch("api/v1/banners");
-
-  useEffect(() => {
-    if (data) {
-      // Limit the number of slides to the first 5 from the API response
-      setSlides(data?.data?.slice(0, 5)); // Assuming your API response is an array of slide objects
-    }
-  }, [data]);
+  const goToSlide = (slideIndex) => {
+    setCurrentIndex(slideIndex);
+  };
 
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
@@ -36,14 +43,6 @@ const BannerCarousel = () => {
     return () => clearInterval(interval);
   }, [currentIndex]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
   if (!slides || slides.length === 0) {
     return <div>No data available</div>;
   }
@@ -60,8 +59,47 @@ const BannerCarousel = () => {
         style={{ backgroundImage: `url(${slides[currentIndex].imageUrl})` }}
         className="w-full h-full duration-500 bg-center bg-cover"
       >
-        <div className="absolute text-4xl font-bold text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-          {slides[currentIndex]?.name}
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg bg-opacity-90 backdrop-blur-sm">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+            <div className="relative">
+              <label className="block mb-2 text-sm font-medium text-gray-700">
+                Destination
+              </label>
+              <input
+                type="text"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Where to?"
+              />
+            </div>
+
+            <div className="relative">
+              <label className="block mb-2 text-sm font-medium text-gray-700">
+                Date
+              </label>
+              <input
+                type="date"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+
+            <div className="relative">
+              <label className="block mb-2 text-sm font-medium text-gray-700">
+                People
+              </label>
+              <input
+                type="number"
+                min="1"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Number of people"
+              />
+            </div>
+
+            <div className="flex items-end">
+              <button className="w-full h-[52px] px-6 py-3 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Search
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
