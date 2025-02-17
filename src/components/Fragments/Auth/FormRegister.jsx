@@ -46,12 +46,12 @@ const FormRegister = () => {
       setEmailError("");
     }
 
-    if (name.trim() === "") {
-      setNameError("Name is required");
-      isValid = false;
-    } else {
-      setNameError("");
-    }
+    // if (name.trim() === "") {
+    //   setNameError("Name is required");
+    //   isValid = false;
+    // } else {
+    //   setNameError("");
+    // }
 
     if (password.trim() === "") {
       setPasswordError("Password is required");
@@ -188,19 +188,61 @@ const FormRegister = () => {
           onClose={handleAlertClose}
         />
       )}
+
+      <div className="flex flex-col pt-4 w-[100%]">
+        <div className="flex items-center gap-1">
+          <label htmlFor="lastName" className="text-sm text-gray-600">
+            Email
+          </label>
+          <span className="text-xs text-gray-400">(required)</span>
+        </div>
+        <input
+          type="email"
+          id="email"
+          placeholder="your@email.com"
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full h-8 px-3 py-2 mt-1 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+        />
+        <p className="text-xs text-red-600">{emailError}</p>
+      </div>
+
       <div className="flex flex-row gap-2 w-[100%]">
         <div className="flex flex-col pt-4 w-[50%]">
+          <div className="flex items-center gap-1">
+            <label htmlFor="name" className="text-sm text-gray-600">
+              First Name
+            </label>
+            <span className="text-xs text-gray-400">(optional)</span>
+          </div>
           <input
-            type="email"
-            id="email"
-            placeholder="your@email.com"
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            id="name"
+            placeholder="Your first name"
+            onChange={(e) => setName(e.target.value)}
             className="w-full h-8 px-3 py-2 mt-1 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
           />
-          <p className="text-xs text-red-600">{emailError}</p>
+          <p className="text-xs text-red-600">{nameError}</p>
         </div>
 
         <div className="flex flex-col pt-4 w-[50%]">
+          <div className="flex items-center gap-1">
+            <label htmlFor="lastName" className="text-sm text-gray-600">
+              Last Name
+            </label>
+            <span className="text-xs text-gray-400">(optional)</span>
+          </div>
+          <input
+            type="text"
+            id="lastName"
+            placeholder="Your last name"
+            onChange={(e) => setLastName(e.target.value)} // Добавьте состояние для lastName
+            className="w-full h-8 px-3 py-2 mt-1 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-row gap-2 w-[100%]">
+        {/* <div className="flex flex-col pt-4 w-[50%]">
           <input
             type="text"
             id="name"
@@ -209,7 +251,7 @@ const FormRegister = () => {
             className="w-full h-8 px-3 py-2 mt-1 leading-tight text-gray-700 border rounded shadow appearance-none sm:w-full focus:outline-none focus:shadow-outline"
           />
           <p className="text-xs text-red-600">{nameError}</p>
-        </div>
+        </div> */}
       </div>
       <div className="flex flex-row gap-2 w-[100%]">
         <div className="flex flex-col pt-4 w-[50%]">
@@ -233,7 +275,7 @@ const FormRegister = () => {
           <p className="text-xs text-red-600">{passwordRepeatError}</p>
         </div>
       </div>
-      <div className="pt-4">
+      {/* <div className="pt-4">
         <select
           name=""
           id=""
@@ -246,9 +288,9 @@ const FormRegister = () => {
           <option value="admin">Admin</option>
           <option value="user">User</option>
         </select>
-      </div>
+      </div> */}
 
-      <div className="flex flex-col pt-4">
+      {/* <div className="flex flex-col pt-4">
         <input
           type="tel"
           id="phone_number"
@@ -256,9 +298,9 @@ const FormRegister = () => {
           onChange={(e) => setPhoneNumber(e.target.value)}
           className="w-full h-8 px-3 py-2 mt-1 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
         />
-      </div>
+      </div> */}
 
-      <div className="flex flex-col gap-2 pt-4">
+      {/* <div className="flex flex-col gap-2 pt-4">
         <input
           type="file"
           value={profilePictureName}
@@ -276,7 +318,7 @@ const FormRegister = () => {
         >
           Preview Image
         </button>
-      </div>
+      </div> */}
 
       <button
         disabled={!isFormValid}
