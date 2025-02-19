@@ -18,6 +18,7 @@ import EditActivityPage from "./pages/editActivity";
 import EditPromoPage from "./pages/editPromo";
 import AddActivityPage from "./pages/addActivity";
 import AddPromoPage from "./pages/addPromo";
+import LoginSignupContext from "./context/loginSignUpContext";
 
 const routes = [
   { path: "/login", element: <LoginPage /> },
@@ -130,7 +131,7 @@ const routes = [
 
 function App() {
   const element = useRoutes(routes);
-  return element;
+  return <LoginSignupContext>{element}</LoginSignupContext>;
 }
 
 export default App;

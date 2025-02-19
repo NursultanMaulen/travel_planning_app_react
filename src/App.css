@@ -10,7 +10,9 @@
 
 .logo__login,
 .navbar__logo {
-  font-family: "Lovers Quarrel", cursive;
+  font-family: "Parisienne";
+  font-size: x-large;
+  color: beige;
 }
 
 .animate-slide:hover {

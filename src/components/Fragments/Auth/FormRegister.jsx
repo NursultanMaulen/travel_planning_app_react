@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import useCreate from "../../../hooks/usePost";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import Modal from "../Global/Modal";
 import Alert from "../Global/Alert";
@@ -9,6 +8,7 @@ import Alert from "../Global/Alert";
 const FormRegister = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const [role, setRole] = useState("admin");
@@ -26,7 +26,7 @@ const FormRegister = () => {
   const [passwordRepeatError, setPasswordRepeatError] = useState("");
   const [alert, setAlert] = useState({ show: false, message: "" });
 
-  const { createItem: handleRegister } = useCreate("api/v1/register");
+  const { createItem: handleRegister } = useCreate("users");
 
   const handleAlertClose = () => {
     setAlert({ show: false, message: "" });
@@ -45,13 +45,6 @@ const FormRegister = () => {
     } else {
       setEmailError("");
     }
-
-    // if (name.trim() === "") {
-    //   setNameError("Name is required");
-    //   isValid = false;
-    // } else {
-    //   setNameError("");
-    // }
 
     if (password.trim() === "") {
       setPasswordError("Password is required");
@@ -93,88 +86,17 @@ const FormRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (password !== passwordRepeat) {
+      return setAlert({ show: true, message: "Passwords do not match" });
+    }
+
+    const newUser = { email, name, lastName, password, role };
     try {
-      let urlFoto = "";
-      if (profilePictureFile) {
-        const acceptImage = ["image/"];
-        if (
-          !acceptImage.some((item) => profilePictureFile.type.includes(item))
-        ) {
-          return setAlert({
-            show: true,
-            message: "Files that are allowed are only of type Image",
-            headerMessage: "Failed!",
-            style: "text-red-700 bg-red-100 border-red-400 w-96",
-          });
-        }
-        setTimeout(() => {
-          setAlert({ show: false, message: "" });
-        }, 3000);
-        if (profilePictureFile?.size > 500 * 1024) {
-          return setAlert({
-            show: true,
-            message: "File size exceeds 500 kb",
-            headerMessage: "Failed!",
-            style: "text-red-700 bg-red-100 border-red-400 w-96",
-          });
-        }
-        setTimeout(() => {
-          setAlert({ show: false, message: "" });
-        }, 3000);
-        let data = new FormData();
-        data.append("image", profilePictureFile);
-        await axios
-          .post(
-            "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/upload-image",
-            data,
-            {
-              headers: {
-                apiKey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
-          .then((response) => {
-            if (response.data.status === "OK") {
-              urlFoto = response.data.url;
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-      const registerData = {
-        email,
-        name,
-        password,
-        passwordRepeat,
-        role,
-        profilePictureUrl: urlFoto,
-        phoneNumber,
-      };
-      const createdItem = await handleRegister(registerData);
-      setAlert({
-        show: true,
-        message: createdItem.message,
-        headerMessage: "Success!",
-        style: "text-green-700 bg-green-200 border-green-400 w-96",
-      });
-      setTimeout(() => {
-        setAlert({ show: false, message: "" });
-        navigate("/login");
-      }, 3000);
-      console.log("Register successful:", createdItem);
+      await handleRegister(newUser);
+      setAlert({ show: true, message: "Registration successful!" });
+      setTimeout(() => navigate("/login"), 2000);
     } catch (error) {
-      setAlert({
-        show: true,
-        message: error?.response?.data?.message,
-        headerMessage: "Failed!",
-        style: "text-red-700 bg-red-100 border-red-400 w-96",
-      });
-      setTimeout(() => {
-        setAlert({ show: false, message: "" });
-      }, 3000);
-      console.error("Error:", error);
+      setAlert({ show: true, message: "Failed to register" });
     }
   };
 
@@ -235,24 +157,13 @@ const FormRegister = () => {
             type="text"
             id="lastName"
             placeholder="Your last name"
-            onChange={(e) => setLastName(e.target.value)} // Добавьте состояние для lastName
+            onChange={(e) => setLastName(e.target.value)}
             className="w-full h-8 px-3 py-2 mt-1 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
           />
         </div>
       </div>
 
-      <div className="flex flex-row gap-2 w-[100%]">
-        {/* <div className="flex flex-col pt-4 w-[50%]">
-          <input
-            type="text"
-            id="name"
-            placeholder="your name"
-            onChange={(e) => setName(e.target.value)}
-            className="w-full h-8 px-3 py-2 mt-1 leading-tight text-gray-700 border rounded shadow appearance-none sm:w-full focus:outline-none focus:shadow-outline"
-          />
-          <p className="text-xs text-red-600">{nameError}</p>
-        </div> */}
-      </div>
+      <div className="flex flex-row gap-2 w-[100%]"></div>
       <div className="flex flex-row gap-2 w-[100%]">
         <div className="flex flex-col pt-4 w-[50%]">
           <input
@@ -275,55 +186,12 @@ const FormRegister = () => {
           <p className="text-xs text-red-600">{passwordRepeatError}</p>
         </div>
       </div>
-      {/* <div className="pt-4">
-        <select
-          name=""
-          id=""
-          onChange={(e) => setRole(e.target.value)}
-          className="w-full h-8 px-3 mt-1 leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
-        >
-          <option value="" disabled>
-            Pilih satu opsi
-          </option>
-          <option value="admin">Admin</option>
-          <option value="user">User</option>
-        </select>
-      </div> */}
-
-      {/* <div className="flex flex-col pt-4">
-        <input
-          type="tel"
-          id="phone_number"
-          placeholder="Phone Number"
-          onChange={(e) => setPhoneNumber(e.target.value)}
-          className="w-full h-8 px-3 py-2 mt-1 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-        />
-      </div> */}
-
-      {/* <div className="flex flex-col gap-2 pt-4">
-        <input
-          type="file"
-          value={profilePictureName}
-          accept="image/*"
-          onChange={(e) => {
-            setProfilePictureName(e.target.value);
-            setProfilePictureFile(e.target.files[0]);
-          }}
-          className="text-darkColor dark:text-white"
-        />
-        <button
-          type="button"
-          onClick={openImagePreview}
-          className="p-2 mt-2 h-8 items-center flex justify-center text-md font-bold text-white bg-[#015AB8] hover:bg-gray-700 rounded"
-        >
-          Preview Image
-        </button>
-      </div> */}
 
       <button
         disabled={!isFormValid}
         type="submit"
         className="p-2 mt-6 h-8 items-center flex justify-center text-md font-bold text-white bg-[#015AB8] hover:bg-gray-700 rounded"
+        onSubmit={handleSubmit}
       >
         Register
       </button>

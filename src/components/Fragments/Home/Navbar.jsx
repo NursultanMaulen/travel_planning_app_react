@@ -38,7 +38,7 @@ const Navbar = () => {
       }`}
     >
       <div className="container flex items-center justify-between h-24 navbar__container ">
-        <Link to="/" className="text-5xl navbar__logo text-primaryColor">
+        <Link to="/" className="navbar__logo text-primaryColor">
           Travel Planning
         </Link>
         <Link

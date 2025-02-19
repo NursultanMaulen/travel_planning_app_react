@@ -1,19 +1,19 @@
 import { useState, useRef, useEffect } from "react";
-import useCreate from "../../../hooks/usePost"; // Ganti dengan path yang benar
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import Alert from "../Global/Alert";
+import { loginHandler } from "../../../services/loginSignUpServices";
+import { useLoginSignupContext } from "../../../context/loginSignUpContext";
+import { useNavigate } from "react-router-dom";
 
 const FormLogin = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { dispatch, email, password } = useLoginSignupContext();
   const [token, setToken] = useLocalStorage("authToken", "");
   const [role, setRole] = useLocalStorage("role", "");
   const [isFormValid, setIsFormValid] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [alert, setAlert] = useState({ show: false, message: "" });
-
-  const { createItem: handleLogin } = useCreate("api/v1/login");
+  const navigate = useNavigate();
 
   const handleAlertClose = () => {
     setAlert({ show: false, message: "" });
@@ -21,34 +21,14 @@ const FormLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const loginData = { email, password };
-      const createdItem = await handleLogin(loginData);
-      console.log("Login successful:", createdItem);
-      setToken(createdItem.token || createdItem.data);
-      setRole(createdItem.data.role);
-      setAlert({
-        show: true,
-        message: createdItem.message,
-        headerMessage: "Success!",
-        style: "text-green-700 bg-green-200 border-green-400 w-96",
-      });
-      setTimeout(() => {
-        setAlert({ show: false, message: "" });
-        window.location.href = "/";
-      }, 3000);
+      await loginHandler(email, password, dispatch);
+      console.log("SUCCESSFUL!!!");
+      setAlert({ show: true, message: "Login successful!" });
+      navigate("/");
     } catch (error) {
-      setAlert({
-        show: true,
-        message: error?.response?.data?.message,
-        headerMessage: "Failed!",
-        style: "text-red-700 bg-red-100 border-red-400 w-96",
-      });
-      setTimeout(() => {
-        setAlert({ show: false, message: "" });
-      }, 3000);
       console.error("Error during login:", error);
+      setAlert({ show: true, message: "Invalid email or password" });
     }
   };
 
@@ -88,7 +68,7 @@ const FormLogin = () => {
           id="email"
           placeholder="your@email.com"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => dispatch({ type: "EMAIL", payload: e.target.value })}
           onBlur={() =>
             setEmailError(email.trim() === "" ? "Email must not be empty" : "")
           }
@@ -108,7 +88,9 @@ const FormLogin = () => {
           id="password"
           placeholder="Password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) =>
+            dispatch({ type: "PASSWORD", payload: e.target.value })
+          }
           onBlur={() =>
             setPasswordError(
               password.trim() === "" ? "Password must not be empty" : ""

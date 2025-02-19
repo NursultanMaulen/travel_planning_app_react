@@ -12,21 +12,19 @@ const AboutUsLayouts = () => {
           <p className="about__subtitle section-subtitle">About Us</p>
           <h1 className="about__title section-title">Explore world with us</h1>
           <p className="mb-4 about__text section-text 2xl:max-w-md">
-            At "Travel Planning", we are revolutionizing travel planning by
-            integrating artificial intelligence and data analysis into a
-            seamless digital experience. Our platform simplifies the process of
-            organizing trips by bringing together all essential
-            services—flights, hotels, attractions, and budgeting tools—into one
-            convenient interface. We understand that modern travelers face the
-            challenge of information overload, spending hours searching multiple
-            websites to plan their perfect trip. Our AI-powered system
-            personalizes recommendations, optimizes travel itineraries, and
-            helps users make informed decisions quickly and efficiently. Whether
-            you're an adventurer, a business traveler, or a family planning a
-            vacation, our goal is to provide a fast, intelligent, and
-            user-friendly solution that makes travel planning effortless and
-            enjoyable. Let’s redefine the way the world explores—smarter,
-            faster, and better.
+            At Travel Planning, we are transforming the way people organize
+            their trips by harnessing the power of data-driven insights and
+            artificial intelligence. Our platform integrates flights,
+            accommodations, attractions, and budgeting tools into a single,
+            user-friendly interface. We understand that the multitude of
+            websites and options available can make travel planning
+            overwhelming. That's why our AI-enhanced solution quickly and
+            effortlessly guides travelers toward optimal choices by tailoring
+            recommendations and simplifying itineraries. Our mission is to
+            streamline the travel planning process, making it faster, easier,
+            and less stressful for everyone—be it families on vacation, business
+            professionals, or solo adventurers. Join us as we revolutionize
+            global travel, one seamless experience at a time.
           </p>
           <Link to="/" className="inline-flex about__button button">
             Get Started

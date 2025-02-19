@@ -11,7 +11,7 @@ const useFetch = (endpoint) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://travel-journal-api-bootcamp.do.dibimbing.id/${endpoint}`,
+        `${endpoint}`,
         {
           headers: {
             apiKey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",

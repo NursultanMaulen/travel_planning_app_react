@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "id": "f90a",
+      "email": "n@mail.com",
+      "name": "asdasd",
+      "lastName": "asdasd",
+      "password": "nursultan",
+      "role": "admin"
+    }
+  ]
+}

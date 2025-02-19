@@ -13,7 +13,7 @@ const useGetById = (endpoint) => {
       setLoading(true); // Set loading to true when the request starts
 
       const response = await axios.get(
-        `https://travel-journal-api-bootcamp.do.dibimbing.id/${endpoint}/${id}`,
+        `${endpoint}/${id}`,
         {
           headers: {
             apiKey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
