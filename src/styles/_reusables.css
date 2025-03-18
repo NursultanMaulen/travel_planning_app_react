@@ -20,3 +20,61 @@
     @apply mx-auto w-[calc(100%-3rem)] max-w-[1200px];
   }
 }
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.carousel {
+  scroll-behavior: smooth;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.carousel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.carousel-items {
+  padding: 0 40px;
+  transition: transform 0.3s ease;
+}
+
+.carousel-item {
+  transition: all 250ms;
+  position: relative;
+}
+
+.carousel-item:hover {
+  transform: scale(1.2);
+  z-index: 10;
+}
+
+@media (max-width: 640px) {
+  .arrow-left,
+  .arrow-right {
+    display: none;
+  }
+
+  .carousel-items {
+    padding: 0 10px;
+  }
+
+  .carousel-item {
+    width: 200px;
+  }
+}
+
+/* Animation for modal details */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fixed {
+  animation: fadeIn 0.3s ease-in-out;
+}
