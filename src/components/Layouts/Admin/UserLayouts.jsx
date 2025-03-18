@@ -9,62 +9,61 @@ import Alert from "../../Fragments/Global/Alert";
 
 const UserLayouts = () => {
   const [dataUser, setDataUser] = useState([]);
-  const [visibleData, setVisibleData] = useState(6); // Jumlah data yang ditampilkan
-  const { data, loading, error } = useFetch("api/v1/all-user");
-  const { updateItem } = useUpdate("api/v1/update-user-role");
+  const [visibleData, setVisibleData] = useState(6);
+  const { data, loading, error } = useFetch("http://localhost:5000/users");
+  const { updateItem } = useUpdate("http://localhost:5000/users");
   const [alert, setAlert] = useState({ show: false, message: "" });
+
+  // Заглушки для отсутствующих полей
+  const getMockData = (user) => ({
+    ...user,
+    profilePictureUrl: "https://via.placeholder.com/150", // Заглушка для фото
+    phoneNumber: "+7 (XXX) XXX-XX-XX", // Заглушка для телефона
+    fullName: `${user.name} ${user.lastName || ""}`.trim() // Объединение имени и фамилии
+  });
 
   const handleRoleToggle = async (userId, currentRole) => {
     try {
       const updatedRole = currentRole === "admin" ? "user" : "admin";
-
+      
       const payload = await updateItem(userId, { role: updatedRole });
-      if (payload.status === "OK") {
-        setDataUser((prev) => {
-          const indexData = prev.findIndex((v) => v.id === userId);
-          const tempData = [...prev];
-          tempData[indexData].role = updatedRole;
-          return tempData;
-        });
+      
+      if (payload) {
+        setDataUser(prev => prev.map(user => 
+          user.id === userId ? { ...user, role: updatedRole } : user
+        ));
 
         setAlert({
           show: true,
-          message: payload.message,
+          message: "Role updated successfully!",
           headerMessage: "Success!",
           style: "text-green-700 bg-green-200 border-green-400",
         });
-
-        setTimeout(() => {
-          setAlert({ show: false, message: "" });
-        }, 3000);
       }
     } catch (error) {
       setAlert({
-        show: false,
-        message: error.message,
-        headerMessage: "Failed!",
+        show: true,
+        message: "Update failed!",
+        headerMessage: "Error!",
         style: "text-red-700 bg-red-100 border-red-400",
       });
-      setTimeout(() => {
-        setAlert({ show: false, message: "" });
-      }, 3000);
       console.error("Error updating user role:", error);
     }
+    
+    setTimeout(() => setAlert({ show: false, message: "" }), 3000);
   };
 
   useEffect(() => {
-    if (data.data) {
-      setDataUser(data.data);
+    if (data) {
+      // Добавляем mock-данные для отсутствующих полей
+      const usersWithMockData = data.map(user => getMockData(user));
+      setDataUser(usersWithMockData);
     }
   }, [data]);
 
-  const loadMore = () => {
-    setVisibleData((prevVisibleData) => prevVisibleData + 6);
-  };
-
-  const handleAlertClose = () => {
-    setAlert({ show: false, message: "" });
-  };
+  // Остальной код остается без изменений
+  const loadMore = () => setVisibleData(prev => prev + 6);
+  const handleAlertClose = () => setAlert({ show: false, message: "" });
 
   return (
     <AdminLayouts>
@@ -76,10 +75,13 @@ const UserLayouts = () => {
           onClose={handleAlertClose}
         />
       )}
+      
       <p className="mb-6 text-3xl font-bold text-darkColor dark:text-white">
         Users
       </p>
+
       {error && <p>{error?.message}</p>}
+
       {loading ? (
         <div className="absolute top-1/2 left-[43%] md:left-1/2">
           <Loader classname="w-12 h-12" />
@@ -99,31 +101,32 @@ const UserLayouts = () => {
                 />
                 <figcaption className="mt-5 text-center">
                   <p className="mb-2 text-xl font-semibold text-gray-700 dark:text-gray-300">
-                    {user.name}
+                    {user.fullName} {/* Используем объединенное имя */}
                   </p>
                   <p className="text-gray-500 dark:text-gray-300">
-                    <span className="font-medium">{user.email}</span>
+                    {user.email}
                   </p>
                   <p className="text-gray-500 dark:text-gray-300">
-                    <span className="font-medium">{user.phoneNumber}</span>
+                    {user.phoneNumber} {/* Заглушка */}
                   </p>
+                  
                   <div className="mt-4">
                     <label className="mr-2 text-gray-700 dark:text-white">
                       Admin
                     </label>
                     <Switch
                       className={`relative inline-flex items-center h-6 rounded-full w-11 ${
-                        user.role === "admin"
-                          ? "bg-green-600"
+                        user.role === "admin" 
+                          ? "bg-green-600" 
                           : "bg-primaryColor"
                       }`}
-                      onClick={() => handleRoleToggle(user.id, user.role)} // Call the role toggle function
+                      onClick={() => handleRoleToggle(user.id, user.role)}
                     >
                       <span className="sr-only">Toggle role</span>
                       <span
                         className={`${
-                          user.role === "admin"
-                            ? "translate-x-1"
+                          user.role === "admin" 
+                            ? "translate-x-1" 
                             : "translate-x-6"
                         } inline-block w-4 h-4 transform bg-white rounded-full`}
                       />
@@ -136,6 +139,7 @@ const UserLayouts = () => {
               </div>
             ))}
           </div>
+
           {visibleData < dataUser.length && (
             <div className="flex items-center justify-center py-8">
               <Button

@@ -6,6 +6,8 @@ const ProtectedProfile = ({ children }) => {
   const [role, setRole] = useLocalStorage("role", "");
 
   if (!token || token === "undefined") {
+    console.log("TOKEN:   ", token);
+    console.log("ROLE:   ", role);
     return <Navigate to={"/login"} />;
   }
 

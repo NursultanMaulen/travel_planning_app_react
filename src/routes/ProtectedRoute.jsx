@@ -1,17 +1,11 @@
 import { Navigate, Outlet } from "react-router";
-import useLocalStorage from "../hooks/useLocalStorage";
+import { useLoginSignupContext } from "../context/loginSignUpContext";
 
 const ProtectedRoute = ({ children }) => {
-  const [token, setToken] = useLocalStorage("authToken", "");
-  const [role, setRole] = useLocalStorage("role", "");
+  const {isAuthenticated} = useLoginSignupContext();
 
-  if (!token || token === "undefined") {
-    return <Navigate to={"/login"} />;
-  } else if (role !== "admin" || role === "") {
-    return <Navigate to={"*"} />;
-  }
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
 
-  return <div> {children || <Outlet />} </div>;
 };
 
 export default ProtectedRoute;

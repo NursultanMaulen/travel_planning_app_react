@@ -28,14 +28,6 @@ const routes = [
     element: <HomePage />,
   },
   {
-    path: "/dashboard",
-    element: (
-      <ProtectedRoute>
-        <DashboardPage />
-      </ProtectedRoute>
-    ),
-  },
-  {
     path: "/banner",
     element: (
       <ProtectedRoute>
@@ -78,9 +70,9 @@ const routes = [
   {
     path: "/user",
     element: (
-      <ProtectedRoute>
-        <UserPage />
-      </ProtectedRoute>
+    <ProtectedRoute>
+      <UserPage />
+    </ProtectedRoute>
     ),
   },
   {
@@ -120,6 +112,14 @@ const routes = [
     element: (
       <ProtectedProfile>
         <ProfilePage />
+      </ProtectedProfile>
+    ),
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <ProtectedProfile>
+        <DashboardPage />
       </ProtectedProfile>
     ),
   },
