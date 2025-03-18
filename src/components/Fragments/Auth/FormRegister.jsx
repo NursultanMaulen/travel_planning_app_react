@@ -94,7 +94,7 @@ const FormRegister = () => {
     try {
       await handleRegister(newUser);
       setAlert({ show: true, message: "Registration successful!" });
-      setTimeout(() => navigate("/login"), 2000);
+      setTimeout(() => navigate("/login"), 1000);
     } catch (error) {
       setAlert({ show: true, message: "Failed to register" });
     }

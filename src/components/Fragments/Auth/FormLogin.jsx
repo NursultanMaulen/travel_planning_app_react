@@ -5,7 +5,7 @@ import { loginHandler } from "../../../services/loginSignUpServices";
 import { useLoginSignupContext } from "../../../context/loginSignUpContext";
 import { useNavigate } from "react-router-dom";
 
-const FormLogin = () => {
+const FormLogin = (state) => {
   const { dispatch, email, password } = useLoginSignupContext();
   const [token, setToken] = useLocalStorage("authToken", "");
   const [role, setRole] = useLocalStorage("role", "");
@@ -21,15 +21,23 @@ const FormLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await loginHandler(email, password, dispatch);
-      console.log("SUCCESSFUL!!!");
+    const res = await loginHandler(email, password, dispatch);
+    if (res.success) {
       setAlert({ show: true, message: "Login successful!" });
       navigate("/");
-    } catch (error) {
-      console.error("Error during login:", error);
+    } else {
       setAlert({ show: true, message: "Invalid email or password" });
     }
+    // try {
+    //   console.log("TRYING TO LOGIN", email, password, dispatch);
+    //   await loginHandler(email, password, dispatch);
+    //   console.log("SUCCESSFUL!!!");
+    //   setAlert({ show: true, message: "Login successful!" });
+    //   navigate("/");
+    // } catch (error) {
+    //   console.error("Error during login:", error);
+    //   setAlert({ show: true, message: "Invalid email or password" });
+    // }
   };
 
   const emailRef = useRef(null);

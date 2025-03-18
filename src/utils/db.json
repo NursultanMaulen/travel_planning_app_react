@@ -7,6 +7,14 @@
       "lastName": "asdasd",
       "password": "nursultan",
       "role": "admin"
+    },
+    {
+      "id": "996f",
+      "email": "n2@mail.com",
+      "name": "Nursultan",
+      "lastName": "",
+      "password": "nursultan123",
+      "role": "admin"
     }
   ]
 }

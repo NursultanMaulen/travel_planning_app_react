@@ -5,7 +5,15 @@ const useLocalStorage = (key, initialValue) => {
     try {
       const item = window.localStorage.getItem(key);
 
-      return item ? JSON.parse(item) : initialValue;
+      if (item) {
+        try {
+          return JSON.parse(item);
+        } catch {
+          return item;
+        }
+      }
+
+      return initialValue;
     } catch (error) {
       console.log(error);
       return initialValue;

@@ -5,7 +5,7 @@ export const logoutHandler = (dispatch) => {
   localStorage.clear();
   dispatch({ type: "LOGOUT" });
   toast.success("Logout success!");
-};
+};  
 
 export const signUpHandler = async (userData) => {
   try {
@@ -36,7 +36,6 @@ export const loginHandler = async (email, password, dispatch) => {
     if (!response.ok) {
       throw new Error("Failed to fetch users");
     }
-    console.log("SUCCESS");
 
     const users = await response.json();
 
@@ -46,20 +45,22 @@ export const loginHandler = async (email, password, dispatch) => {
 
     if (foundUser) {
       console.log("USER FOUND", foundUser);
-      const token = "mock-token";
-      localStorage.setItem("token", token);
+      localStorage.setItem("authToken", "mock-token");
+      console.log("AUTH TOKEN SET: ", localStorage.getItem("authToken"));
 
       localStorage.setItem("userData", JSON.stringify(foundUser));
 
       dispatch({ type: "LOGINDATA", payload: foundUser });
 
       toast.success(`Welcome ${foundUser.name}!`);
+      return { success: true };
     } else {
-      toast.error("Invalid email or password");
+      console.error("Invalid email or password");
+      return { success: false, message: "Invalid email or password" };
     }
   } catch (error) {
     console.error("Error during login:", error);
-    toast.error("Failed to login. Please try again.");
+    return { success: false, message: error.message };
   } finally {
     dispatch({ type: "LOADING", payload: false });
   }

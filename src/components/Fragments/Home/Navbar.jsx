@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import useColorMode from "../../../hooks/useColorMode";
-
+import { useNavigate } from "react-router-dom";
 import ProfileDropdown from "../Global/ProfileDropdown";
 import { navItems } from "../../../utils/data";
 import useLocalStorage from "../../../hooks/useLocalStorage";
+import { logoutHandler } from "../../../services/loginSignUpServices";
+import { useLoginSignupContext } from "../../../context/loginSignUpContext";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [token, setToken] = useLocalStorage("authToken", "");
   const [stickyNav, setstickyNav] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { loginData, dispatch } = useLoginSignupContext();
 
   const isCurrentPage = (url) => {
-    // Fungsi ini akan memeriksa apakah URL cocok dengan lokasi saat ini
     return location.pathname === url;
   };
 
@@ -27,6 +30,12 @@ const Navbar = () => {
       }
     });
   }, [stickyNav]);
+
+  const handleLogout = useCallback(() => {
+    logoutHandler(dispatch);
+    localStorage.clear();
+    navigate("/login");
+  }, [navigate]);
 
   const [colorMode, setColorMode] = useColorMode();
   return (
@@ -139,7 +148,12 @@ const Navbar = () => {
 
           <div className="mx-auto">
             {token && (
-              <ProfileDropdown classname="-right-24 bottom-12 lg:right-0 lg:bottom-auto" />
+              <button
+                onClick={handleLogout}
+                className="w-full h-[52px] px-6 py-3 text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2"
+              >
+                Logout
+              </button>
             )}
           </div>
         </div>
