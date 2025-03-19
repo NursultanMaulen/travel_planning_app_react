@@ -30,7 +30,7 @@ npm install
 <p>4. Enabling mock json-server:</p>
 
 ```
-cd /src/utils
+cd ./src/utils
 npm json-server --watch db.json --port 5000
 ```
 
