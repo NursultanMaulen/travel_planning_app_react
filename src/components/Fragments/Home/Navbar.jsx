@@ -8,6 +8,7 @@ import { navItems } from "../../../utils/data";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { logoutHandler } from "../../../services/loginSignUpServices";
 import { useLoginSignupContext } from "../../../context/loginSignUpContext";
+import ProfileButton from "../../Elements/Button/ProfileButton";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -146,14 +147,17 @@ const Navbar = () => {
             </Link>
           )}
 
-          <div className="mx-auto">
+          <div className="flex items-center gap-3">
             {token && (
-              <button
-                onClick={handleLogout}
-                className="w-full h-[52px] px-6 py-3 text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2"
-              >
-                Logout
-              </button>
+              <>
+                <ProfileButton />
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 text-sm text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2"
+                >
+                  Logout
+                </button>
+              </>
             )}
           </div>
         </div>

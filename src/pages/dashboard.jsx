@@ -2,86 +2,87 @@ import React from "react";
 import Navbar from "../components/Fragments/Home/Navbar";
 import FooterLayouts from "../components/Layouts/Home/FooterLayouts";
 import TravelCarousel from "../components/Fragments/Dashboard/TravelCarousel";
+import AIChat from "../components/Elements/AIChat/AIChat";
 
 const DashboardPage = () => {
   const recommendedCountries = [
     {
       id: 1,
-      title: "Франция",
+      title: "France",
       image: "/api/placeholder/400/320",
       description:
-        "Франция – одна из самых посещаемых стран мира, известная своей изысканной кухней, высокой модой, средневековыми городами и культурными достопримечательностями мирового класса, включая Эйфелеву башню и Лувр в Париже.",
+        "France is one of the most visited countries in the world, known for its exquisite cuisine, high fashion, medieval towns, and world-class cultural attractions, including the Eiffel Tower and the Louvre in Paris.",
     },
     {
       id: 2,
-      title: "Италия",
+      title: "Italy",
       image: "/api/placeholder/400/320",
       description:
-        "Италия славится своей выдающейся историей, архитектурой и кухней. Здесь вы сможете посетить древний Колизей в Риме, полюбоваться архитектурой Флоренции, прокатиться на гондоле по каналам Венеции или исследовать красочное побережье Амальфи.",
+        "Italy is famous for its outstanding history, architecture, and cuisine. Here you can visit the ancient Colosseum in Rome, admire the architecture of Florence, take a gondola ride through the canals of Venice, or explore the colorful Amalfi Coast.",
     },
     {
       id: 3,
-      title: "Япония",
+      title: "Japan",
       image: "/api/placeholder/400/320",
       description:
-        "Япония – удивительная страна контрастов, где древние традиции гармонично сочетаются с передовыми технологиями. Посетите токийские небоскребы, древние храмы Киото, и насладитесь знаменитой японской кухней.",
+        "Japan is an amazing country of contrasts where ancient traditions harmoniously blend with cutting-edge technology. Visit Tokyo's skyscrapers, Kyoto's ancient temples, and enjoy famous Japanese cuisine.",
     },
     {
       id: 4,
-      title: "Греция",
+      title: "Greece",
       image: "/api/placeholder/400/320",
       description:
-        "Греция предлагает потрясающие пейзажи, от красивых островов с белыми домиками и голубыми крышами до древних руин и исторических мест. Исследуйте Афинский акрополь, плавайте в кристально чистых водах и наслаждайтесь вкусной средиземноморской кухней.",
+        "Greece offers stunning landscapes, from beautiful islands with white houses and blue roofs to ancient ruins and historic sites. Explore the Acropolis of Athens, swim in crystal clear waters, and enjoy delicious Mediterranean cuisine.",
     },
     {
       id: 5,
-      title: "Таиланд",
+      title: "Thailand",
       image: "/api/placeholder/400/320",
       description:
-        "Таиланд известен своими тропическими пляжами, роскошными королевскими дворцами, древними руинами и украшенными орнаментом храмами с величественными статуями Будды. Отличный выбор для любителей экзотики и приключений.",
+        "Thailand is known for its tropical beaches, luxurious royal palaces, ancient ruins, and ornate temples with majestic Buddha statues. An excellent choice for exotic lovers and adventure seekers.",
     },
   ];
 
   const upcomingEvents = [
     {
       id: 1,
-      title: "Концерт в Париже",
+      title: "Concert in Paris",
       image: "/api/placeholder/400/320",
       date: "2024-10-15",
       description:
-        "Грандиозное музыкальное событие года в столице Франции. Вас ждет незабываемое шоу с участием мировых звезд, потрясающие световые эффекты и атмосфера праздника.",
+        "The grand musical event of the year in the capital of France. You will experience an unforgettable show featuring world stars, stunning light effects, and a festive atmosphere.",
     },
     {
       id: 2,
-      title: "Карнавал в Венеции",
+      title: "Venice Carnival",
       image: "/api/placeholder/400/320",
       date: "2025-02-10",
       description:
-        "Знаменитый венецианский карнавал - одно из самых ярких и запоминающихся событий Италии. Маски, костюмы, музыка и уникальная атмосфера средневекового праздника.",
+        "The famous Venetian carnival is one of the brightest and most memorable events in Italy. Masks, costumes, music, and the unique atmosphere of a medieval festival.",
     },
     {
       id: 3,
-      title: "Фестиваль света в Амстердаме",
+      title: "Amsterdam Light Festival",
       image: "/api/placeholder/400/320",
       date: "2024-12-05",
       description:
-        "Ежегодный фестиваль, во время которого город превращается в настоящую световую галерею. Художники со всего мира создают уникальные световые инсталляции на каналах и улицах города.",
+        "An annual festival during which the city turns into a real light gallery. Artists from around the world create unique light installations on the canals and streets of the city.",
     },
     {
       id: 4,
-      title: "Октоберфест в Мюнхене",
+      title: "Oktoberfest in Munich",
       image: "/api/placeholder/400/320",
       date: "2025-09-20",
       description:
-        "Крупнейший в мире фестиваль пива, который ежегодно привлекает миллионы посетителей. Вас ждут литры свежего пива, традиционные немецкие блюда и веселая атмосфера.",
+        "The world's largest beer festival, which annually attracts millions of visitors. You'll enjoy liters of fresh beer, traditional German dishes, and a cheerful atmosphere.",
     },
     {
       id: 5,
-      title: "Сакура в Японии",
+      title: "Cherry Blossom in Japan",
       image: "/api/placeholder/400/320",
       date: "2025-04-01",
       description:
-        "Цветение сакуры - одно из самых красивых природных явлений, которое привлекает туристов со всего мира. Розовые облака цветущих деревьев создают неповторимую атмосферу весеннего обновления.",
+        "Cherry blossom is one of the most beautiful natural phenomena that attracts tourists from all over the world. Pink clouds of flowering trees create a unique atmosphere of spring renewal.",
     },
   ];
 
@@ -90,41 +91,41 @@ const DashboardPage = () => {
       id: 1,
       title: "Grand Plaza Hotel",
       image: "/api/placeholder/400/320",
-      location: "Барселона, Испания",
+      location: "Barcelona, Spain",
       description:
-        "Роскошный пятизвездочный отель с панорамным видом на город, бассейном на крыше и спа-центром. Идеальное место для ценителей комфорта и изысканного сервиса.",
+        "A luxurious five-star hotel with panoramic city views, a rooftop pool, and a spa center. The perfect place for those who appreciate comfort and exquisite service.",
     },
     {
       id: 2,
       title: "Ocean Breeze Resort",
       image: "/api/placeholder/400/320",
-      location: "Бали, Индонезия",
+      location: "Bali, Indonesia",
       description:
-        "Уютный курортный комплекс на берегу океана с частным пляжем, традиционными бунгало и ресторанами высокой кухни. Подходит для романтического отдыха и семейных каникул.",
+        "A cozy resort complex on the ocean shore with a private beach, traditional bungalows, and fine dining restaurants. Suitable for romantic getaways and family vacations.",
     },
     {
       id: 3,
       title: "Alpine Chalet Residence",
       image: "/api/placeholder/400/320",
-      location: "Церматт, Швейцария",
+      location: "Zermatt, Switzerland",
       description:
-        "Комфортабельный горный отель с прямым доступом к лыжным трассам, спа-центром и традиционной швейцарской кухней. Здесь вы сможете насладиться красотой Альп в любое время года.",
+        "A comfortable mountain hotel with direct access to ski trails, a spa center, and traditional Swiss cuisine. Here you can enjoy the beauty of the Alps any time of the year.",
     },
     {
       id: 4,
       title: "Sandals Royal Caribbean",
       image: "/api/placeholder/400/320",
-      location: "Ямайка",
+      location: "Jamaica",
       description:
-        "Эксклюзивный курорт для взрослых с системой 'все включено', частными бунгало над водой и высококлассным сервисом. Идеальный выбор для незабываемого отдыха на Карибах.",
+        "An exclusive adults-only resort with all-inclusive system, private overwater bungalows, and high-class service. The ideal choice for an unforgettable vacation in the Caribbean.",
     },
     {
       id: 5,
       title: "Burj Al Arab Jumeirah",
       image: "/api/placeholder/400/320",
-      location: "Дубай, ОАЭ",
+      location: "Dubai, UAE",
       description:
-        "Один из самых роскошных отелей мира, расположенный в здании в форме паруса. Предлагает обслуживание на высочайшем уровне, рестораны с мишленовскими звездами и потрясающие виды на Персидский залив.",
+        "One of the most luxurious hotels in the world, located in a sail-shaped building. It offers service at the highest level, Michelin-starred restaurants, and stunning views of the Persian Gulf.",
     },
   ];
 
@@ -132,6 +133,7 @@ const DashboardPage = () => {
     <div className="dark:bg-gray-900 min-h-screen">
       <div className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 shadow-md">
         <Navbar />
+        <AIChat />
       </div>
 
       <div className="pt-20">
@@ -139,29 +141,26 @@ const DashboardPage = () => {
         <main className="container mx-auto px-4">
           <section className="py-8">
             <h2 className="text-3xl font-bold text-black dark:text-white mb-6">
-              Рекомендуемые страны
+              Recommended Countries
             </h2>
             <TravelCarousel
               items={recommendedCountries}
-              title="Популярные направления"
+              title="Popular Destinations"
             />
           </section>
 
           <section className="py-8">
             <h2 className="text-3xl font-bold text-black dark:text-white mb-6">
-              Ближайшие события
+              Upcoming Events
             </h2>
-            <TravelCarousel items={upcomingEvents} title="Не пропустите" />
+            <TravelCarousel items={upcomingEvents} title="Don't Miss" />
           </section>
 
           <section className="py-8">
             <h2 className="text-3xl font-bold text-black dark:text-white mb-6">
-              Популярные отели
+              Popular Hotels
             </h2>
-            <TravelCarousel
-              items={popularHotels}
-              title="Лучшие места для проживания"
-            />
+            <TravelCarousel items={popularHotels} title="Best Places to Stay" />
           </section>
         </main>
       </div>

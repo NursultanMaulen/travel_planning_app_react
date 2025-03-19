@@ -1,49 +1,61 @@
 import { forwardRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 
 const Sidebar = forwardRef(({ showNav }, ref) => {
   const [role, setRole] = useLocalStorage("role", "");
+  const location = useLocation();
+
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
 
   return (
     <aside
       ref={ref}
-      className="fixed z-10 w-56 h-full bg-white border-r-2 border-gray-200 shadow-lg dark:bg-darkColor"
+      className="fixed z-10 w-64 h-full bg-gradient-to-b from-gray-50 to-white border-r border-gray-200 shadow-lg dark:from-gray-900 dark:to-gray-800 dark:border-gray-700"
     >
-      <div className="flex justify-center mt-8 mb-8 dark:text-white">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-10 h-10"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
-          />
-        </svg>
+      <div className="flex justify-center mt-8 mb-8">
+        <div className="p-3 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 text-white shadow-md">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-8 h-8"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
+            />
+          </svg>
+        </div>
       </div>
 
-      <div className="flex flex-col text-darkColor dark:text-white">
-        {role === "admin" && (
-          <>
+      <div className="flex flex-col text-darkColor dark:text-white px-3">
+        <div className="mb-6">
+          <h3 className="px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-gray-400">
+            Main Menu
+          </h3>
+          <div className="mt-3 space-y-1">
             <Link to="/dashboard">
               <div
-                className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors
-            
-            `}
+                className={`px-4 py-3 rounded-lg flex items-center transition-all duration-200 ${
+                  isActive("/dashboard")
+                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                }`}
               >
-                <div className="mr-2">
+                <div className="mr-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                   >
                     <path
                       strokeLinecap="round"
@@ -52,22 +64,25 @@ const Sidebar = forwardRef(({ showNav }, ref) => {
                     />
                   </svg>
                 </div>
-                <p>Dashboard</p>
+                <span className="font-medium">Dashboard</span>
               </div>
             </Link>
+
             <Link to="/user">
               <div
-                className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors
-           
-            `}
+                className={`px-4 py-3 rounded-lg flex items-center transition-all duration-200 ${
+                  isActive("/user")
+                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                }`}
               >
-                <div className="mr-2">
+                <div className="mr-3">
                   <svg
                     aria-hidden="true"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                   >
                     <path
                       strokeLinecap="round"
@@ -77,21 +92,25 @@ const Sidebar = forwardRef(({ showNav }, ref) => {
                     />
                   </svg>
                 </div>
-                <p>Users</p>
+                <span className="font-medium">Users</span>
               </div>
             </Link>
+
             <Link to="/banner">
               <div
-                className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors
-            `}
+                className={`px-4 py-3 rounded-lg flex items-center transition-all duration-200 ${
+                  isActive("/banner")
+                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                }`}
               >
-                <div className="mr-2">
+                <div className="mr-3">
                   <svg
                     aria-hidden="true"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                   >
                     <path
                       strokeLinecap="round"
@@ -101,21 +120,25 @@ const Sidebar = forwardRef(({ showNav }, ref) => {
                     />
                   </svg>
                 </div>
-                <p>Banners</p>
+                <span className="font-medium">Banners</span>
               </div>
             </Link>
+
             <Link to="/promo">
               <div
-                className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors
-            `}
+                className={`px-4 py-3 rounded-lg flex items-center transition-all duration-200 ${
+                  isActive("/promo")
+                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                }`}
               >
-                <div className="mr-2">
+                <div className="mr-3">
                   <svg
                     aria-hidden="true"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                   >
                     <path
                       strokeLinecap="round"
@@ -125,21 +148,25 @@ const Sidebar = forwardRef(({ showNav }, ref) => {
                     />
                   </svg>
                 </div>
-                <p>Promos</p>
+                <span className="font-medium">Promos</span>
               </div>
             </Link>
+
             <Link to="/category">
               <div
-                className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors
-            `}
+                className={`px-4 py-3 rounded-lg flex items-center transition-all duration-200 ${
+                  isActive("/category")
+                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                }`}
               >
-                <div className="mr-2">
+                <div className="mr-3">
                   <svg
                     aria-hidden="true"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                   >
                     <path
                       strokeLinecap="round"
@@ -149,21 +176,25 @@ const Sidebar = forwardRef(({ showNav }, ref) => {
                     />
                   </svg>
                 </div>
-                <p>Categories</p>
+                <span className="font-medium">Categories</span>
               </div>
             </Link>
+
             <Link to="/activity">
               <div
-                className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors
-            `}
+                className={`px-4 py-3 rounded-lg flex items-center transition-all duration-200 ${
+                  isActive("/activity")
+                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                }`}
               >
-                <div className="mr-2">
+                <div className="mr-3">
                   <svg
                     aria-hidden="true"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                   >
                     <path
                       strokeLinecap="round"
@@ -173,38 +204,68 @@ const Sidebar = forwardRef(({ showNav }, ref) => {
                     />
                   </svg>
                 </div>
-                <p>Activities</p>
+                <span className="font-medium">Activities</span>
               </div>
             </Link>
-          </>
-        )}
-      </div>
-      <div className="flex flex-col mt-32">
-        <Link to="/" className="mx-auto dark:text-white">
-          <div
-            className={` py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors
-            
-            `}
-          >
-            <div className="mr-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
+
+            <Link to="/profile">
+              <div
+                className={`px-4 py-3 rounded-lg flex items-center transition-all duration-200 ${
+                  isActive("/profile")
+                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                }`}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-                />
-              </svg>
-            </div>
-            <p>Back to home</p>
+                <div className="mr-3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                </div>
+                <span className="font-medium">Profile</span>
+              </div>
+            </Link>
           </div>
-        </Link>
+        </div>
+
+        <div className="mb-6">
+          <h3 className="px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-gray-400">
+            Additional
+          </h3>
+          <div className="mt-3 space-y-1">
+            <Link to="/">
+              <div className="px-4 py-3 rounded-lg flex items-center transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                <div className="mr-3 text-blue-500">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+                    />
+                  </svg>
+                </div>
+                <span className="font-medium">Back to Home</span>
+              </div>
+            </Link>
+          </div>
+        </div>
       </div>
     </aside>
   );

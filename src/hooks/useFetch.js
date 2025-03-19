@@ -10,15 +10,7 @@ const useFetch = (endpoint) => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `${endpoint}`,
-        {
-          headers: {
-            apiKey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${endpoint}`);
       setData(response.data);
     } catch (error) {
       setError(error);

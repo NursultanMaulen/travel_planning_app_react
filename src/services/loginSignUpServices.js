@@ -5,7 +5,7 @@ export const logoutHandler = (dispatch) => {
   localStorage.clear();
   dispatch({ type: "LOGOUT" });
   toast.success("Logout success!");
-};  
+};
 
 export const signUpHandler = async (userData) => {
   try {
@@ -45,7 +45,8 @@ export const loginHandler = async (email, password, dispatch) => {
 
     if (foundUser) {
       console.log("USER FOUND", foundUser);
-      localStorage.setItem("authToken", "mock-token");
+      localStorage.setItem("authToken", foundUser.id);
+      localStorage.setItem("userID", foundUser.id);
       console.log("AUTH TOKEN SET: ", localStorage.getItem("authToken"));
 
       localStorage.setItem("userData", JSON.stringify(foundUser));

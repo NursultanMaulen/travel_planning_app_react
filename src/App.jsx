@@ -30,81 +30,81 @@ const routes = [
   {
     path: "/banner",
     element: (
-      <ProtectedRoute>
+      <ProtectedProfile>
         <BannerPage />
-      </ProtectedRoute>
+      </ProtectedProfile>
     ),
   },
   {
     path: "/promo",
     element: (
-      <ProtectedRoute>
+      <ProtectedProfile>
         <PromoPage />
-      </ProtectedRoute>
+      </ProtectedProfile>
     ),
   },
   {
     path: "/addPromo",
     element: (
-      <ProtectedRoute>
+      <ProtectedProfile>
         <AddPromoPage />
-      </ProtectedRoute>
+      </ProtectedProfile>
     ),
   },
   {
     path: "/editPromo/:id",
     element: (
-      <ProtectedRoute>
+      <ProtectedProfile>
         <EditPromoPage />
-      </ProtectedRoute>
+      </ProtectedProfile>
     ),
   },
   {
     path: "/category",
     element: (
-      <ProtectedRoute>
+      <ProtectedProfile>
         <CategoryPage />
-      </ProtectedRoute>
+      </ProtectedProfile>
     ),
   },
   {
     path: "/user",
     element: (
-    <ProtectedRoute>
-      <UserPage />
-    </ProtectedRoute>
+      <ProtectedProfile>
+        <UserPage />
+      </ProtectedProfile>
     ),
   },
   {
     path: "/activity",
     element: (
-      <ProtectedRoute>
+      <ProtectedProfile>
         <ActivityPage />
-      </ProtectedRoute>
+      </ProtectedProfile>
     ),
   },
   {
     path: "/detailActivity/:id",
     element: (
-      <ProtectedRoute>
+      <ProtectedProfile>
         <DetailActivityPage />
-      </ProtectedRoute>
+      </ProtectedProfile>
     ),
   },
   {
     path: "/editActivity/:id",
     element: (
-      <ProtectedRoute>
+      <ProtectedProfile>
         <EditActivityPage />
-      </ProtectedRoute>
+      </ProtectedProfile>
     ),
   },
   {
     path: "/addActivity",
     element: (
-      <ProtectedRoute>
+      <ProtectedProfile>
         <AddActivityPage />
-      </ProtectedRoute>
+      </ProtectedProfile>
     ),
   },
   {
