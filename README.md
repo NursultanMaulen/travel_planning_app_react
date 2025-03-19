@@ -27,7 +27,14 @@ cd travel_planning_app_react
 npm install
 ```
 
-<p>4. Running the Project:</p>
+<p>4. Enabling mock json-server:</p>
+
+```
+cd /src/utils
+npm json-server --watch db.json --port 5000
+```
+
+<p>5. Running the Project:</p>
 
 ```
 npm run dev
