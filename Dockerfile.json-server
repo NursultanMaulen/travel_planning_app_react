@@ -1,9 +1,0 @@
-FROM node:18-alpine
-
-WORKDIR /data
-
-RUN npm install -g json-server
-
-COPY utils/db.json .
-
-CMD ["json-server", "--watch", "db.json", "--port", "5000"]
