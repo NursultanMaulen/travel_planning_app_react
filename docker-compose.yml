@@ -1,8 +1,57 @@
 version: "3.8"
+
 services:
   frontend:
-    image: travel-app
-    build: .
+    build:
+      context: ./travel_planning_app_react
+      dockerfile: Dockerfile
     ports:
       - "80:80"
+    volumes:
+      - ./travel_planning_app_react:/app # Монтирование для разработки
+      - /app/node_modules # Игнорируем node_modules контейнера
+    depends_on:
+      - backend
+      - json-server # Добавляем зависимость
     restart: always
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_JSON_SERVER=http://localhost:5000
+
+  backend:
+    build: ./backend/travel_planner_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/travel_planner_backend:/app
+    environment:
+      - DEBUG=True
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+      - ALLOWED_HOSTS=localhost,127.0.0.1,backend
+    depends_on:
+      - db
+    restart: always
+
+  json-server: # Новый сервис
+    build:
+      context: .
+      dockerfile: Dockerfile.json-server
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./utils/db.json:/data/db.json
+    restart: always
+
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=travel_planner_backend_db
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
